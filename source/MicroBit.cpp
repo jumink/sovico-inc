@@ -80,7 +80,7 @@ MicroBit::MicroBit() :
     //compassCalibrator(compass, accelerometer, display),
     //thermometer(storage),
     rotaryencoder()
-    /*,
+    ,
     io(MICROBIT_ID_IO_P0,MICROBIT_ID_IO_P1,MICROBIT_ID_IO_P2,
        MICROBIT_ID_IO_P3,MICROBIT_ID_IO_P4,MICROBIT_ID_IO_P5,
        MICROBIT_ID_IO_P6,MICROBIT_ID_IO_P7,MICROBIT_ID_IO_P8,
@@ -88,7 +88,7 @@ MicroBit::MicroBit() :
        MICROBIT_ID_IO_P12,MICROBIT_ID_IO_P13,MICROBIT_ID_IO_P14,
        MICROBIT_ID_IO_P15,MICROBIT_ID_IO_P16,MICROBIT_ID_IO_P19,
        MICROBIT_ID_IO_P20)
-    */
+    
     //bleManager(storage),
     //radio(),
     //ble(NULL)
