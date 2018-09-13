@@ -62,7 +62,7 @@ MicroBit::MicroBit() :
     serial(USBTX, USBRX),
 	resetButton(MICROBIT_PIN_BUTTON_RESET),
     storage(),
-    i2c(I2C_SDA0, I2C_SCL0),
+    //i2c(I2C_SDA0, I2C_SCL0),
     messageBus(),
     display(),
     buttonA(MICROBIT_PIN_BUTTON_A, MICROBIT_ID_BUTTON_A),
@@ -74,20 +74,24 @@ MicroBit::MicroBit() :
     buttonG(MICROBIT_PIN_BUTTON_G, MICROBIT_ID_BUTTON_G),
     buttonH(MICROBIT_PIN_BUTTON_H, MICROBIT_ID_BUTTON_H),
     buttonAB(MICROBIT_ID_BUTTON_A,MICROBIT_ID_BUTTON_B, MICROBIT_ID_BUTTON_AB),
-    accelerometer(i2c),
-    compass(i2c, accelerometer, storage),
-    compassCalibrator(compass, accelerometer, display),
-    thermometer(storage),
+    buttonEncoder(MICROBIT_PIN_BUTTON_ENCODER, MICROBIT_ID_BUTTON_ENCODER),
+    //accelerometer(i2c),
+    //compass(i2c, accelerometer, storage),
+    //compassCalibrator(compass, accelerometer, display),
+    //thermometer(storage),
+    rotaryencoder()
+    /*,
     io(MICROBIT_ID_IO_P0,MICROBIT_ID_IO_P1,MICROBIT_ID_IO_P2,
        MICROBIT_ID_IO_P3,MICROBIT_ID_IO_P4,MICROBIT_ID_IO_P5,
        MICROBIT_ID_IO_P6,MICROBIT_ID_IO_P7,MICROBIT_ID_IO_P8,
        MICROBIT_ID_IO_P9,MICROBIT_ID_IO_P10,MICROBIT_ID_IO_P11,
        MICROBIT_ID_IO_P12,MICROBIT_ID_IO_P13,MICROBIT_ID_IO_P14,
        MICROBIT_ID_IO_P15,MICROBIT_ID_IO_P16,MICROBIT_ID_IO_P19,
-       MICROBIT_ID_IO_P20),
-    bleManager(storage),
-    radio(),
-    ble(NULL)
+       MICROBIT_ID_IO_P20)
+    */
+    //bleManager(storage),
+    //radio(),
+    //ble(NULL)
 {
     // Clear our status
     status = 0;
@@ -150,14 +154,15 @@ void MicroBit::init()
             microbit_create_heap(MICROBIT_SD_GATT_TABLE_START + MICROBIT_SD_GATT_TABLE_SIZE, MICROBIT_SD_LIMIT);
 #endif
             // Start the BLE stack, if it isn't already running.
+            /*
             if (!ble)
             {
                 bleManager.init(getName(), getSerial(), messageBus, true);
                 ble = bleManager.ble;
             }
-
+            */
             // Enter pairing mode, using the LED matrix for any necessary pairing operations
-            bleManager.pairingMode(display, buttonA);
+            //bleManager.pairingMode(display, buttonA);
         }
     }
 #endif
@@ -173,11 +178,13 @@ void MicroBit::init()
 
 #if CONFIG_ENABLED(MICROBIT_BLE_ENABLED)
     // Start the BLE stack, if it isn't already running.
+    /*
     if (!ble)
     {
         bleManager.init(getName(), getSerial(), messageBus, false);
         ble = bleManager.ble;
     }
+    */
 #endif
 }
 
@@ -209,7 +216,7 @@ void MicroBit::onListenerRegisteredEvent(MicroBitEvent evt)
             // A listener has been registered for the compass.
             // The compass uses lazy instantiation, we just need to read the data once to start it running.
             // Touch the compass through the heading() function to ensure it is calibrated. if it isn't this will launch any associated calibration algorithms.
-            compass.heading();
+            //compass.heading();
 
             break;
 
@@ -217,13 +224,13 @@ void MicroBit::onListenerRegisteredEvent(MicroBitEvent evt)
         case MICROBIT_ID_GESTURE:
             // A listener has been registered for the accelerometer.
             // The accelerometer uses lazy instantiation, we just need to read the data once to start it running.
-            accelerometer.updateSample();
+            //accelerometer.updateSample();
             break;
 
         case MICROBIT_ID_THERMOMETER:
             // A listener has been registered for the thermometer.
             // The thermometer uses lazy instantiation, we just need to read the data once to start it running.
-            thermometer.updateSample();
+            //thermometer.updateSample();
             break;
     }
 }
