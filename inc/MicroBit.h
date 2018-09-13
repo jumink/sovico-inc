@@ -66,6 +66,8 @@ DEALINGS IN THE SOFTWARE.
 #include "MicroBitRadio.h"
 #include "MicroBitStorage.h"
 
+#include "MicroBitRotaryEncoder.h"
+
 // MicroBit::flags values
 #define MICROBIT_INITIALIZED                    0x01
 
@@ -102,7 +104,7 @@ class MicroBit
     MicroBitStorage             storage;
 
     // I2C Interface
-    MicroBitI2C                 i2c;
+    //MicroBitI2C                 i2c;
 
     // Device level Message Bus abstraction
     MicroBitMessageBus          messageBus;
@@ -111,25 +113,27 @@ class MicroBit
     MicroBitDisplay             display;
     MicroBitButton              buttonA;
     MicroBitButton              buttonB;
-    MicroBitButton              buttonC;
-    MicroBitButton              buttonD;
-    MicroBitButton              buttonE;
-    MicroBitButton              buttonF;
-    MicroBitButton              buttonG;
-    MicroBitButton              buttonH;
+    MicroBitButton              buttonC; // Added by NG;
+    MicroBitButton              buttonD; // Added by NG;
+    MicroBitButton              buttonE; // Added by NG;
+    MicroBitButton              buttonF; // Added by NG;
+    MicroBitButton              buttonG; // Added by NG;
+    MicroBitButton              buttonH; // Added by NG;
     MicroBitMultiButton         buttonAB;
-    MicroBitAccelerometer       accelerometer;
-    MicroBitCompass             compass;
-    MicroBitCompassCalibrator   compassCalibrator;
-    MicroBitThermometer         thermometer;
+    MicroBitButton				buttonEncoder; // Added by NG;
+    //MicroBitAccelerometer       accelerometer;
+    //MicroBitCompass             compass;
+    //MicroBitCompassCalibrator   compassCalibrator;
+    //MicroBitThermometer         thermometer;
+    MicroBitRotaryEncoder       rotaryencoder; // Added by NG;
 
     //An object of available IO pins on the device
-    MicroBitIO                  io;
+    //MicroBitIO                  io;
 
     // Bluetooth related member variables.
-	MicroBitBLEManager		    bleManager;
-    MicroBitRadio               radio;
-    BLEDevice                   *ble;
+	//MicroBitBLEManager		    bleManager;
+    //MicroBitRadio               radio;
+    //BLEDevice                   *ble;
 
     /**
       * Constructor.
@@ -191,7 +195,7 @@ class MicroBit
       * Delay execution for the given amount of time.
       *
       * If the scheduler is running, this will deschedule the current fiber and perform
-      * a power efficent, concurrent sleep operation.
+      * a power efficient, concurrent sleep operation.
       *
       * If the scheduler is disabled or we're running in an interrupt context, this
       * will revert to a busy wait.
@@ -241,7 +245,7 @@ class MicroBit
       * than the hardware random number generator built int the processor, which takes
       * a long time and uses a lot of energy.
       *
-      * KIDS: You shouldn't use this is the real world to generte cryptographic keys though...
+      * KIDS: You shouldn't use this is the real world to generate cryptographic keys though...
       * have a think why not. :-)
       *
       * @param max the upper range to generate a number for. This number cannot be negative.
@@ -423,6 +427,7 @@ inline ManagedString MicroBit::getSerial()
   */
 inline void MicroBit::reset()
 {
+    /*
     if(ble && ble->getGapState().connected) {
 
         // We have a connected BLE peer. Disconnect the BLE session.
@@ -431,6 +436,7 @@ inline void MicroBit::reset()
         // Wait a little while for the connection to drop.
         wait_ms(100);
     }
+    */
 
     microbit_reset();
 }
@@ -439,7 +445,7 @@ inline void MicroBit::reset()
   * Delay execution for the given amount of time.
   *
   * If the scheduler is running, this will deschedule the current fiber and perform
-  * a power efficent, concurrent sleep operation.
+  * a power efficient, concurrent sleep operation.
   *
   * If the scheduler is disabled or we're running in an interrupt context, this
   * will revert to a busy wait.
@@ -471,7 +477,7 @@ inline void MicroBit::sleep(uint32_t milliseconds)
   * than the hardware random number generator built int the processor, which takes
   * a long time and uses a lot of energy.
   *
-  * KIDS: You shouldn't use this is the real world to generte cryptographic keys though...
+  * KIDS: You shouldn't use this is the real world to generate cryptographic keys though...
   * have a think why not. :-)
   *
   * @param max the upper range to generate a number for. This number cannot be negative.
