@@ -128,7 +128,7 @@ class MicroBit
     MicroBitRotaryEncoder       rotaryencoder; // Added by NG;
 
     //An object of available IO pins on the device
-    //MicroBitIO                  io;
+    MicroBitIO                  io;
 
     // Bluetooth related member variables.
 	//MicroBitBLEManager		    bleManager;
